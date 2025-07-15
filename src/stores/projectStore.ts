@@ -21,35 +21,43 @@ export const useProjectStore = create<ProjectStore>((set) => ({
   projects: [
     {
       id: '1',
-      name: 'Website Redesign',
-      description: 'Complete overhaul of company website',
+      name: 'MODEE',
+      description: 'MODEE project development and implementation',
       startDate: new Date('2024-01-15'),
-      endDate: new Date('2024-04-30'),
+      endDate: new Date('2024-06-30'),
       status: 'active'
     },
     {
       id: '2',
-      name: 'Mobile App',
-      description: 'New mobile application development',
+      name: 'Internship',
+      description: 'Internship program management and coordination',
       startDate: new Date('2024-02-01'),
-      endDate: new Date('2024-06-15'),
+      endDate: new Date('2024-08-15'),
       status: 'active'
     },
     {
       id: '3',
-      name: 'Data Analytics',
-      description: 'Business intelligence dashboard',
+      name: 'PMIEF',
+      description: 'PMIEF project development and oversight',
       startDate: new Date('2024-03-01'),
-      endDate: new Date('2024-05-30'),
+      endDate: new Date('2024-09-30'),
       status: 'planning'
     },
     {
       id: '4',
-      name: 'API Integration',
-      description: 'Third-party API integrations',
+      name: 'Aflatoun',
+      description: 'Aflatoun initiative implementation',
       startDate: new Date('2024-01-01'),
-      endDate: new Date('2024-03-15'),
+      endDate: new Date('2024-05-15'),
       status: 'active'
+    },
+    {
+      id: '5',
+      name: 'KTI',
+      description: 'KTI project coordination and delivery',
+      startDate: new Date('2024-04-01'),
+      endDate: new Date('2024-10-31'),
+      status: 'planning'
     }
   ],
 

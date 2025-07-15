@@ -29,41 +29,42 @@ export const useEmployeeStore = create<EmployeeStore>((set, get) => ({
   employees: [
     {
       id: '1',
-      name: 'John Smith',
+      name: 'Sami Sunaa',
       department: 'Engineering',
-      email: 'john.smith@company.com',
+      email: 'sami.sunaa@company.com',
       allocations: [
-        { projectId: '1', percentage: 60 },
+        { projectId: '1', percentage: 50 },
         { projectId: '2', percentage: 30 }
       ]
     },
     {
       id: '2',
-      name: 'Sarah Johnson',
+      name: 'Lara Amaireh',
       department: 'Design',
-      email: 'sarah.johnson@company.com',
+      email: 'lara.amaireh@company.com',
       allocations: [
         { projectId: '1', percentage: 40 },
-        { projectId: '3', percentage: 50 }
+        { projectId: '3', percentage: 45 }
       ]
     },
     {
       id: '3',
-      name: 'Mike Davis',
+      name: 'Tariq Qaisi',
       department: 'Engineering',
-      email: 'mike.davis@company.com',
+      email: 'tariq.qaisi@company.com',
       allocations: [
-        { projectId: '2', percentage: 80 },
-        { projectId: '4', percentage: 40 }
+        { projectId: '2', percentage: 60 },
+        { projectId: '4', percentage: 25 }
       ]
     },
     {
       id: '4',
-      name: 'Emily Chen',
+      name: 'Dima Nabulsi',
       department: 'Product',
-      email: 'emily.chen@company.com',
+      email: 'dima.nabulsi@company.com',
       allocations: [
-        { projectId: '3', percentage: 30 }
+        { projectId: '3', percentage: 35 },
+        { projectId: '5', percentage: 40 }
       ]
     }
   ],
