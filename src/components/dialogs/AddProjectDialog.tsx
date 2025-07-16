@@ -52,7 +52,8 @@ export const AddProjectDialog = ({ open, onOpenChange }: AddProjectDialogProps) 
       description,
       startDate,
       endDate,
-      status: 'planning'
+      status: 'planning',
+      tasks: []
     });
 
     toast({

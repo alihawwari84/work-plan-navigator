@@ -10,6 +10,7 @@ import { AllocationTable } from '@/components/dashboard/AllocationTable';
 import { MetricsCards } from '@/components/dashboard/MetricsCards';
 import { UtilizationChart } from '@/components/dashboard/UtilizationChart';
 import { AllocationManagement } from '@/components/allocation/AllocationManagement';
+import { ProjectManagement } from '@/components/projects/ProjectManagement';
 import { AddEmployeeDialog } from '@/components/dialogs/AddEmployeeDialog';
 import { AddProjectDialog } from '@/components/dialogs/AddProjectDialog';
 
@@ -83,14 +84,7 @@ const Dashboard = () => {
           </TabsContent>
 
           <TabsContent value="projects" className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Project Management</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600">Project management interface coming soon...</p>
-              </CardContent>
-            </Card>
+            <ProjectManagement />
           </TabsContent>
 
           <TabsContent value="reports" className="space-y-6">
