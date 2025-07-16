@@ -9,6 +9,7 @@ import { ProjectOverview } from '@/components/dashboard/ProjectOverview';
 import { AllocationTable } from '@/components/dashboard/AllocationTable';
 import { MetricsCards } from '@/components/dashboard/MetricsCards';
 import { UtilizationChart } from '@/components/dashboard/UtilizationChart';
+import { AllocationManagement } from '@/components/allocation/AllocationManagement';
 import { AddEmployeeDialog } from '@/components/dialogs/AddEmployeeDialog';
 import { AddProjectDialog } from '@/components/dialogs/AddProjectDialog';
 
@@ -42,14 +43,18 @@ const Dashboard = () => {
 
         {/* Main Content Tabs */}
         <Tabs defaultValue="overview" className="w-full">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="overview" className="flex items-center gap-2">
               <BarChart3 className="h-4 w-4" />
               Overview
             </TabsTrigger>
+            <TabsTrigger value="manage" className="flex items-center gap-2">
+              <Settings className="h-4 w-4" />
+              Manage Allocations
+            </TabsTrigger>
             <TabsTrigger value="allocations" className="flex items-center gap-2">
               <Users className="h-4 w-4" />
-              Allocations
+              View Allocations
             </TabsTrigger>
             <TabsTrigger value="projects" className="flex items-center gap-2">
               <FolderKanban className="h-4 w-4" />
@@ -67,6 +72,10 @@ const Dashboard = () => {
               <ProjectOverview />
             </div>
             <UtilizationChart />
+          </TabsContent>
+
+          <TabsContent value="manage" className="space-y-6">
+            <AllocationManagement />
           </TabsContent>
 
           <TabsContent value="allocations" className="space-y-6">
