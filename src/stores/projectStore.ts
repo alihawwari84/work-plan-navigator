@@ -156,21 +156,30 @@ export const useProjectStore = create<ProjectStore>((set, get) => ({
     projects: state.projects.filter(proj => proj.id !== id)
   })),
 
-  addTask: (projectId, task) => set((state) => ({
-    projects: state.projects.map(proj => 
-      proj.id === projectId 
-        ? { 
-            ...proj, 
-            tasks: [...proj.tasks, { 
-              ...task, 
-              id: Date.now().toString(),
-              createdAt: new Date(),
-              updatedAt: new Date()
-            }] 
-          }
-        : proj
-    )
-  })),
+  addTask: (projectId, task) => {
+    console.log('Store addTask called with:', { projectId, task });
+    console.log('Current projects:', get().projects.map(p => ({ id: p.id, name: p.name, tasksCount: p.tasks.length })));
+    
+    set((state) => {
+      const updatedProjects = state.projects.map(proj => 
+        proj.id === projectId 
+          ? { 
+              ...proj, 
+              tasks: [...proj.tasks, { 
+                ...task, 
+                id: Date.now().toString(),
+                createdAt: new Date(),
+                updatedAt: new Date()
+              }] 
+            }
+          : proj
+      );
+      
+      console.log('Updated projects:', updatedProjects.map(p => ({ id: p.id, name: p.name, tasksCount: p.tasks.length })));
+      
+      return { projects: updatedProjects };
+    });
+  },
 
   updateTask: (projectId, taskId, task) => set((state) => ({
     projects: state.projects.map(proj => 
