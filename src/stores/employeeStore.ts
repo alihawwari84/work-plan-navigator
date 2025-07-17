@@ -1,132 +1,61 @@
-
 import { create } from 'zustand';
+import { supabase } from '@/lib/supabaseClient';
 
-export interface Allocation {
+interface Allocation {
   projectId: string;
   percentage: number;
 }
 
-export interface Employee {
+interface Employee {
   id: string;
   name: string;
   department: string;
-  email: string;
   allocations: Allocation[];
 }
 
 interface EmployeeStore {
   employees: Employee[];
-  addEmployee: (employee: Omit<Employee, 'id'>) => void;
-  updateEmployee: (id: string, employee: Partial<Employee>) => void;
-  deleteEmployee: (id: string) => void;
+  fetchEmployees: () => void;
   updateAllocation: (employeeId: string, projectId: string, percentage: number) => void;
-  getTotalUtilization: (employeeId: string) => number;
-  getUnderutilizedCount: () => number;
-  getOverallocatedCount: () => number;
 }
 
-export const useEmployeeStore = create<EmployeeStore>((set, get) => ({
-  employees: [
-    {
-      id: '1',
-      name: 'Sami Sunaa',
-      department: 'Engineering',
-      email: 'sami.sunaa@company.com',
-      allocations: [
-        { projectId: '1', percentage: 50 },
-        { projectId: '2', percentage: 30 }
-      ]
-    },
-    {
-      id: '2',
-      name: 'Lara Amaireh',
-      department: 'Design',
-      email: 'lara.amaireh@company.com',
-      allocations: [
-        { projectId: '1', percentage: 40 },
-        { projectId: '3', percentage: 45 }
-      ]
-    },
-    {
-      id: '3',
-      name: 'Tariq Qaisi',
-      department: 'Engineering',
-      email: 'tariq.qaisi@company.com',
-      allocations: [
-        { projectId: '2', percentage: 60 },
-        { projectId: '4', percentage: 25 }
-      ]
-    },
-    {
-      id: '4',
-      name: 'Dima Nabulsi',
-      department: 'Product',
-      email: 'dima.nabulsi@company.com',
-      allocations: [
-        { projectId: '3', percentage: 35 },
-        { projectId: '5', percentage: 40 }
-      ]
+export const useEmployeeStore = create<EmployeeStore>((set) => ({
+  employees: [],
+  fetchEmployees: async () => {
+    const { data, error } = await supabase
+      .from('employees')
+      .select('id, name, department, allocations(project_id, percentage)');
+
+    if (!error && data) {
+      const formatted = data.map((emp: any) => ({
+        ...emp,
+        allocations: emp.allocations.map((a: any) => ({
+          projectId: a.project_id,
+          percentage: a.percentage,
+        })),
+      }));
+      set({ employees: formatted });
     }
-  ],
-
-  addEmployee: (employee) => set((state) => ({
-    employees: [...state.employees, { ...employee, id: Date.now().toString() }]
-  })),
-
-  updateEmployee: (id, employee) => set((state) => ({
-    employees: state.employees.map(emp => 
-      emp.id === id ? { ...emp, ...employee } : emp
-    )
-  })),
-
-  deleteEmployee: (id) => set((state) => ({
-    employees: state.employees.filter(emp => emp.id !== id)
-  })),
-
-  updateAllocation: (employeeId, projectId, percentage) => set((state) => ({
-    employees: state.employees.map(emp => {
-      if (emp.id === employeeId) {
-        const existingAllocationIndex = emp.allocations.findIndex(
-          alloc => alloc.projectId === projectId
-        );
-        
-        let newAllocations = [...emp.allocations];
-        
-        if (existingAllocationIndex >= 0) {
-          if (percentage === 0) {
-            // Remove allocation if percentage is 0
-            newAllocations.splice(existingAllocationIndex, 1);
-          } else {
-            // Update existing allocation
-            newAllocations[existingAllocationIndex] = { projectId, percentage };
-          }
-        } else if (percentage > 0) {
-          // Add new allocation
-          newAllocations.push({ projectId, percentage });
-        }
-        
-        return { ...emp, allocations: newAllocations };
-      }
-      return emp;
-    })
-  })),
-
-  getTotalUtilization: (employeeId) => {
-    const employee = get().employees.find(emp => emp.id === employeeId);
-    return employee?.allocations.reduce((sum, alloc) => sum + alloc.percentage, 0) || 0;
   },
+  updateAllocation: async (employeeId, projectId, percentage) => {
+    await supabase
+      .from('allocations')
+      .upsert({ employee_id: employeeId, project_id: projectId, percentage });
 
-  getUnderutilizedCount: () => {
-    return get().employees.filter(emp => {
-      const total = emp.allocations.reduce((sum, alloc) => sum + alloc.percentage, 0);
-      return total < 50;
-    }).length;
-  },
+    // Optional: refresh employees after update
+    const { data, error } = await supabase
+      .from('employees')
+      .select('id, name, department, allocations(project_id, percentage)');
 
-  getOverallocatedCount: () => {
-    return get().employees.filter(emp => {
-      const total = emp.allocations.reduce((sum, alloc) => sum + alloc.percentage, 0);
-      return total > 100;
-    }).length;
+    if (!error && data) {
+      const formatted = data.map((emp: any) => ({
+        ...emp,
+        allocations: emp.allocations.map((a: any) => ({
+          projectId: a.project_id,
+          percentage: a.percentage,
+        })),
+      }));
+      set({ employees: formatted });
+    }
   }
 }));
