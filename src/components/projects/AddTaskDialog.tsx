@@ -40,6 +40,16 @@ export const AddTaskDialog: React.FC<AddTaskDialogProps> = ({
     e.preventDefault();
     if (!formData.title.trim()) return;
 
+    console.log('Adding task with projectId:', projectId);
+    console.log('Task data:', {
+      title: formData.title,
+      description: formData.description,
+      status: formData.status,
+      priority: formData.priority,
+      assignedTo: formData.assignedTo === 'unassigned' ? undefined : formData.assignedTo,
+      dueDate: formData.dueDate
+    });
+
     addTask(projectId, {
       title: formData.title,
       description: formData.description,
