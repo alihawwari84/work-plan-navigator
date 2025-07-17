@@ -33,7 +33,7 @@ export const EditTaskDialog: React.FC<EditTaskDialogProps> = ({
     description: task.description || '',
     status: task.status,
     priority: task.priority,
-    assignedTo: task.assignedTo || '',
+    assignedTo: task.assignedTo || 'unassigned',
     dueDate: task.dueDate
   });
 
@@ -43,7 +43,7 @@ export const EditTaskDialog: React.FC<EditTaskDialogProps> = ({
       description: task.description || '',
       status: task.status,
       priority: task.priority,
-      assignedTo: task.assignedTo || '',
+      assignedTo: task.assignedTo || 'unassigned',
       dueDate: task.dueDate
     });
   }, [task]);
@@ -57,7 +57,7 @@ export const EditTaskDialog: React.FC<EditTaskDialogProps> = ({
       description: formData.description,
       status: formData.status,
       priority: formData.priority,
-      assignedTo: formData.assignedTo || undefined,
+      assignedTo: formData.assignedTo === 'unassigned' ? undefined : formData.assignedTo,
       dueDate: formData.dueDate
     });
 
@@ -130,7 +130,7 @@ export const EditTaskDialog: React.FC<EditTaskDialogProps> = ({
                 <SelectValue placeholder="Select employee" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Unassigned</SelectItem>
+                <SelectItem value="unassigned">Unassigned</SelectItem>
                 {employees.map((employee) => (
                   <SelectItem key={employee.id} value={employee.id}>
                     {employee.name}

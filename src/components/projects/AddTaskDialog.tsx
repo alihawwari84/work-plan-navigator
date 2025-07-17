@@ -32,7 +32,7 @@ export const AddTaskDialog: React.FC<AddTaskDialogProps> = ({
     description: '',
     status: 'todo' as 'todo' | 'in-progress' | 'done',
     priority: 'medium' as 'low' | 'medium' | 'high',
-    assignedTo: '',
+    assignedTo: 'unassigned',
     dueDate: undefined as Date | undefined
   });
 
@@ -45,7 +45,7 @@ export const AddTaskDialog: React.FC<AddTaskDialogProps> = ({
       description: formData.description,
       status: formData.status,
       priority: formData.priority,
-      assignedTo: formData.assignedTo || undefined,
+      assignedTo: formData.assignedTo === 'unassigned' ? undefined : formData.assignedTo,
       dueDate: formData.dueDate
     });
 
@@ -55,7 +55,7 @@ export const AddTaskDialog: React.FC<AddTaskDialogProps> = ({
       description: '',
       status: 'todo',
       priority: 'medium',
-      assignedTo: '',
+      assignedTo: 'unassigned',
       dueDate: undefined
     });
 
@@ -128,7 +128,7 @@ export const AddTaskDialog: React.FC<AddTaskDialogProps> = ({
                 <SelectValue placeholder="Select employee" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Unassigned</SelectItem>
+                <SelectItem value="unassigned">Unassigned</SelectItem>
                 {employees.map((employee) => (
                   <SelectItem key={employee.id} value={employee.id}>
                     {employee.name}
