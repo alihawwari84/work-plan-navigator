@@ -7,7 +7,7 @@ import { Plus, Users, FolderKanban, BarChart3, Settings } from 'lucide-react';
 import { EmployeeOverview } from '@/components/dashboard/EmployeeOverview';
 import { ProjectOverview } from '@/components/dashboard/ProjectOverview';
 import { AllocationTable } from '@/components/dashboard/AllocationTable';
-import { MetricsCards } from '@/components/dashboard/MetricsCards';
+import MetricsCards from '@/components/dashboard/MetricsCards';
 import { UtilizationChart } from '@/components/dashboard/UtilizationChart';
 import { AllocationManagement } from '@/components/allocation/AllocationManagement';
 import { ProjectManagement } from '@/components/projects/ProjectManagement';

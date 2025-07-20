@@ -1,16 +1,22 @@
-
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Users, FolderKanban, AlertTriangle, TrendingUp } from 'lucide-react';
 import { useEmployeeStore } from '@/stores/employeeStore';
 
-export const MetricsCards = () => {
-  const { employees, getTotalUtilization, getUnderutilizedCount, getOverallocatedCount } = useEmployeeStore();
-  
+const MetricsCards = () => {
+  const {
+    employees,
+    getTotalUtilization,
+    getUnderutilizedCount,
+    getOverallocatedCount
+  } = useEmployeeStore();
+
   const totalEmployees = employees.length;
-  const totalProjects = new Set(employees.flatMap(emp => emp.allocations.map(alloc => alloc.projectId))).size;
-  const underutilized = getUnderutilizedCount();
-  const overallocated = getOverallocatedCount();
+  const totalProjects = new Set(
+    employees.flatMap(emp => emp.allocations.map(alloc => alloc.projectId))
+  ).size;
+  const underutilized = getUnderutilizedCount?.() ?? 0;
+  const overallocated = getOverallocatedCount?.() ?? 0;
 
   const metrics = [
     {
@@ -66,3 +72,5 @@ export const MetricsCards = () => {
     </div>
   );
 };
+
+export default MetricsCards;
