@@ -28,7 +28,7 @@ export const ProjectManagement = () => {
 
   const getTaskStats = (tasks: Task[]) => {
     const total = tasks.length;
-    const completed = tasks.filter(t => t.status === 'done').length;
+    const completed = tasks.filter(t => t.status === 'completed').length;
     const inProgress = tasks.filter(t => t.status === 'in-progress').length;
     const todo = tasks.filter(t => t.status === 'todo').length;
     

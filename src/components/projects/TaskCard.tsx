@@ -27,7 +27,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, projectId, getEmployee
     switch (status) {
       case 'todo': return 'bg-gray-500';
       case 'in-progress': return 'bg-yellow-500';
-      case 'done': return 'bg-green-500';
+      case 'completed': return 'bg-green-500';
       default: return 'bg-gray-500';
     }
   };
@@ -41,7 +41,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, projectId, getEmployee
     }
   };
 
-  const handleStatusChange = (newStatus: 'todo' | 'in-progress' | 'done') => {
+  const handleStatusChange = (newStatus: 'todo' | 'in-progress' | 'completed') => {
     updateTask(projectId, task.id, { status: newStatus });
   };
 
@@ -51,7 +51,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, projectId, getEmployee
     }
   };
 
-  const isOverdue = task.dueDate && new Date() > task.dueDate && task.status !== 'done';
+  const isOverdue = task.dueDate && new Date() > new Date(task.dueDate) && task.status !== 'completed';
 
   return (
     <>
@@ -90,7 +90,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, projectId, getEmployee
                 variant="secondary" 
                 className={`${getStatusColor(task.status)} text-white text-xs cursor-pointer`}
                 onClick={() => {
-                  const statuses: ('todo' | 'in-progress' | 'done')[] = ['todo', 'in-progress', 'done'];
+                  const statuses: ('todo' | 'in-progress' | 'completed')[] = ['todo', 'in-progress', 'completed'];
                   const currentIndex = statuses.indexOf(task.status);
                   const nextIndex = (currentIndex + 1) % statuses.length;
                   handleStatusChange(statuses[nextIndex]);
@@ -113,7 +113,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, projectId, getEmployee
             {task.dueDate && (
               <div className={`flex items-center gap-1 text-xs ${isOverdue ? 'text-red-600' : 'text-muted-foreground'}`}>
                 <Calendar className="h-3 w-3" />
-                <span>{task.dueDate.toLocaleDateString()}</span>
+                <span>{new Date(task.dueDate).toLocaleDateString()}</span>
                 {isOverdue && <span className="font-medium">(Overdue)</span>}
               </div>
             )}

@@ -34,7 +34,7 @@ export const EditTaskDialog: React.FC<EditTaskDialogProps> = ({
     status: task.status,
     priority: task.priority,
     assignedTo: task.assignedTo || 'unassigned',
-    dueDate: task.dueDate
+    dueDate: task.dueDate ? new Date(task.dueDate) : undefined
   });
 
   useEffect(() => {
@@ -44,7 +44,7 @@ export const EditTaskDialog: React.FC<EditTaskDialogProps> = ({
       status: task.status,
       priority: task.priority,
       assignedTo: task.assignedTo || 'unassigned',
-      dueDate: task.dueDate
+      dueDate: task.dueDate ? new Date(task.dueDate) : undefined
     });
   }, [task]);
 
@@ -58,7 +58,7 @@ export const EditTaskDialog: React.FC<EditTaskDialogProps> = ({
       status: formData.status,
       priority: formData.priority,
       assignedTo: formData.assignedTo === 'unassigned' ? undefined : formData.assignedTo,
-      dueDate: formData.dueDate
+      dueDate: formData.dueDate?.toISOString()
     });
 
     onOpenChange(false);
@@ -103,7 +103,7 @@ export const EditTaskDialog: React.FC<EditTaskDialogProps> = ({
                 <SelectContent>
                   <SelectItem value="todo">To Do</SelectItem>
                   <SelectItem value="in-progress">In Progress</SelectItem>
-                  <SelectItem value="done">Done</SelectItem>
+                  <SelectItem value="completed">Completed</SelectItem>
                 </SelectContent>
               </Select>
             </div>

@@ -53,10 +53,9 @@ export const AddTaskDialog: React.FC<AddTaskDialogProps> = ({
     addTask(projectId, {
       title: formData.title,
       description: formData.description,
-      status: formData.status,
-      priority: formData.priority,
-      assignedTo: formData.assignedTo === 'unassigned' ? undefined : formData.assignedTo,
-      dueDate: formData.dueDate
+        status: formData.status === 'done' ? 'completed' : formData.status as 'todo' | 'in-progress' | 'completed',
+        assignedTo: formData.assignedTo === 'unassigned' ? undefined : formData.assignedTo,
+        dueDate: formData.dueDate?.toISOString()
     });
 
     // Reset form
